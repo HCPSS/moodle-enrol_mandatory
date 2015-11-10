@@ -19,10 +19,10 @@ class sync extends \core\task\scheduled_task {
         global $DB;
         
         $userids = $DB->get_records_sql('
-            SELECT u.* FROM {user} u
-            WHERE u.deleted = 0 AND u.suspended = 0 AND u.id NOT IN (
-                SELECT ue.userid FROM {user_enrolments} ue
-                WHERE ue.enrolid = :enrolid
+            SELECT id FROM {user}
+            WHERE deleted = 0 AND suspended = 0 AND id NOT IN (
+                SELECT userid FROM {user_enrolments}
+                WHERE enrolid = :enrolid
             )
         ', ['enrolid' => $enrolment->id]);
         
